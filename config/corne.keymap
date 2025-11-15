@@ -376,7 +376,7 @@ qwerty {
         };
 
 lower_layer {
-	label="lower"
+	label="lower";
 	bindings = <
 &kp CAPS    &kp F1   &kp F2    &kp F3  	   &kp F4    	     &kp GRAVE       &kp EXCL   &kp AT           &kp HASH       &kp DOLLAR   &kp PERCENT   &kp RGUI
 &kp LCTRL   &kp F5   &kp F6    &kp F7      &kp F8    	     &kp K_CMENU     &colon     &question        &kp STAR       &kp LPAR     &kp RPAR      &kp AMPS
