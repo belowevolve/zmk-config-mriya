@@ -9,10 +9,11 @@
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/ext_power.h>
 
-#define BASE   0
-#define LOWER  1
-#define RAISE  2
-#define ADJUST 3
+#define colemak   0
+#defiine qwerty 1
+#define lower  2
+#define raise  3
+#define adjust 4
 
 &lt {
     quick_tap_ms = <220>;
@@ -322,109 +323,86 @@
 };
 
 / {
+    behaviors {
+        hml: hml {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HML";
+            bindings = <&kp>, <&kp>;
+
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            quick-tap-ms = <150>;
+            flavor = "balanced";
+            hold-trigger-key-positions = <36 37 38 6 7 8 9 10 11 18 19 20 21 22 23 30 31 32 33 34 35 39 40 41>;
+            hold-trigger-on-release;
+        };
+
+        hmr: hmr {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HMR";
+            bindings = <&kp>, <&kp>;
+
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            quick-tap-ms = <150>;
+            flavor = "balanced";
+            hold-trigger-on-release;
+            hold-trigger-key-positions = <0 0 1 2 3 4 5 12 13 14 15 16 17 24 25 26 27 28 29 36 37 38 39 40 41>;
+        };
+    };
     keymap {
         compatible = "zmk,keymap";
 		
 // ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 
-	
-        base_layer {
-// ┌────────────────────────────────────────────┐
-label= "BASE"                                   ;
-// └────────────────────────────────────────────┘
-/*
-┌───────┬───────┬───────┬───────┬───────┬───────┐                   ┌───────┬───────┬───────┬───────┬───────┬───────┐
-│  ESC  │   Q   │ LGUI/W│   E   │   R   │   T   │                   │   Y   │   U   │   I   │   O   │   P   │   [   │
-├───────┼───────┼───────┼───────┼───────┼───────┤                   ├───────┼───────┼───────┼───────┼───────┼───────┤                      
-│ CTRL/]│   A   │   S   │   D   │   F   │   G   │                   │   H   │   J   │   K   │   L   │   ;   │RCTRL/'│
-├───────┼───────┼───────┼───────┼───────┼───────┤                   ├───────┼───────┼───────┼───────┼───────┼───────┤
-│ LALT/\│   Z   │   X   │   C   │   V   │   B   │                   │   N   │   M   │   ,   │   .   │   /   │ RALT/-│
-└───────┴───────┴───────┴───────┼───────┼───────┼───────┐   ┌───────┼───────┼───────┼───────┴───────┴───────┴───────┘
-                                │ RAISE │ SPACE │ LOWER │   │ LOWER │  BKSP │ RAISE │
-                                └───────┴───────┴───────┘   └───────┴───────┴───────┘   
-*/
-bindings = <
-	
-&kp ESC    	 &kp Q   &mt LWIN W   &kp E   	  &kp R       	    &kp T       &kp Y  	    &kp U            &kp I       &kp O     &kp P      &kp LBKT     
-&mt LCTRL RBKT   &kp A   &kp S        &kp D   	  &kp F       	    &kp G       &kp H       &kp J            &kp K       &kp L     &kp SEMI   &mt RCTRL SQT
-&mt LALT BSLH    &kp Z   &kp X        &kp C   	  &kp V       	    &kp B       &kp N       &kp M            &kp COMMA   &kp DOT   &kp FSLH   &mt RALT MINUS
-				      &lt 2 TAB   &mt LSHFT SPACE   &lt 1 RET   &lt 1 RET   &mt RSHFT BSPC   &lt 2 DEL   
+colemak {
+	label = "colemak";
+	bindings = <
+&mt DELETE ESCAPE    &kp Q            &kp W                &kp F            &kp P              &kp B        &kp J      &kp L               &kp U             &kp Y                 &kp SEMI          &mt RIGHT_BRACKET LEFT_BRACKET
+&mt LC(LS(T)) LG(V)  &hml LEFT_WIN A  &hml LEFT_CONTROL R  &hml LEFT_ALT S  &hml LEFT_SHIFT T  &kp G        &kp M      &hmr RIGHT_SHIFT N  &hmr RIGHT_ALT E  &hmr RIGHT_CONTROL I  &hmr RIGHT_WIN O  &kp SQT
+&kp EQUAL            &kp Z            &kp X                &kp C            &kp D              &kp V        &kp K      &kp H               &kp COMMA         &kp DOT               &kp FSLH          &mt PLUS MINUS
+                                                           &lt 2 TAB        &kp SPACE        &lt 3 RET    &lt 3 RET  &kp BACKSPACE     &lt 2 DEL
             >;
         };
-		
-// ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 
+qwerty {
+	label = "qwerty";
+    bindings = <
+&mt DELETE ESCAPE    &kp Q            &kp W                &kp E            &kp R              &kp T        &kp Y      &kp U               &kp I             &kp O                 &kp P                     &mt RIGHT_BRACKET LEFT_BRACKET
+&mt LC(LS(T)) LG(V)  &hml LEFT_WIN A  &hml LEFT_CONTROL S  &hml LEFT_ALT D  &hml LEFT_SHIFT F  &kp G        &kp H      &hmr RIGHT_SHIFT J  &hmr RIGHT_ALT K  &hmr RIGHT_CONTROL L  &hmr RIGHT_WIN SEMICOLON  &kp SQT
+&kp EQUAL            &kp Z            &kp X                &kp C            &kp V              &kp B        &kp N      &kp M               &kp COMMA         &kp DOT               &kp FSLH                  &mt PLUS MINUS
+                                                           &lt 2 TAB        &kp SPACE        &lt 3 RET    &lt 3 RET  &kp BACKSPACE     &lt 2 DEL
+            >;
+        };
 
-        lower_layer {
-// ┌────────────────────────────────────────────┐
-label= "LOWER"                                  ;
-// └────────────────────────────────────────────┘
-/*
-┌───────┬───────┬───────┬───────┬───────┬───────┐                   ┌───────┬───────┬───────┬───────┬───────┬───────┐
-│ CAPS  │  F1   │  F2   │  F3   │  F4   │   ~   │                   │   !   │   @   │   #   │   $   │   %   │ RGUI  │
-├───────┼───────┼───────┼───────┼───────┼───────┤                   ├───────┼───────┼───────┼───────┼───────┼───────┤                      
-│ CTRL  │  F5   │  F6   │  F7   │  F8   │ MENU  │                   │   :   │   ?   │   *   │   (   │   )   │   &   │
-├───────┼───────┼───────┼───────┼───────┼───────┤                   ├───────┼───────┼───────┼───────┼───────┼───────┤
-│ LALT  │  F9   │  F10  │  F11  │  F12  │ LANG  │                   │   "   │   «   │   »   │   {   │   }   │   ^   │
-└───────┴───────┴───────┴───────┼───────┼───────┼───────┐   ┌───────┼───────┼───────┼───────┴───────┴───────┴───────┘
-                                │  ADJ  │ LSHFT │   ▼   │   │   ▼   │ RSHFT │  ADJ  │
-                                └───────┴───────┴───────┘   └───────┴───────┴───────┘   
-*/
-bindings = <
-
+lower_layer {
+	label="lower"
+	bindings = <
 &kp CAPS    &kp F1   &kp F2    &kp F3  	   &kp F4    	     &kp GRAVE       &kp EXCL   &kp AT           &kp HASH       &kp DOLLAR   &kp PERCENT   &kp RGUI
 &kp LCTRL   &kp F5   &kp F6    &kp F7      &kp F8    	     &kp K_CMENU     &colon     &question        &kp STAR       &kp LPAR     &kp RPAR      &kp AMPS
 &kp LALT    &kp F9   &kp F10   &kp F11     &kp F12   	     &kp LG(SPACE)   &quote     &lguillement     &rguillement   &lbracket    &rbracket     &kp CARET
-			       &lt 3 TAB   &mt LSHFT SPACE   &trans   	     &trans     &mt RSHFT BSPC   &lt 3 DEL
+			       &trans TAB   &mt LSHFT SPACE   &lt 4 TAB   	     &lt 4 DEL &mt RSHFT BSPC   &trans 
             >;
         };
 		
 // ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄		
 
-        raise_layer {
-// ┌────────────────────────────────────────────┐
-label= "RAISE"                                  ;
-// └────────────────────────────────────────────┘
-/*
-┌───────┬───────┬───────┬───────┬───────┬───────┐                   ┌───────┬───────┬───────┬───────┬───────┬───────┐
-│ BKSP  │   *   │   9   │   8   │   7   │   +   │                   │ NEXT  │ HOME  │ PSCRN │ PGUP  │ VOLU  │ RGUI  │
-├───────┼───────┼───────┼───────┼───────┼───────┤                   ├───────┼───────┼───────┼───────┼───────┼───────┤                      
-│ CTRL  │   /   │   3   │   2   │   1   │   0   │                   │ PLAY  │   ←   │   ↑   │   →   │ VOLD  │ CTRL  │
-├───────┼───────┼───────┼───────┼───────┼───────┤                   ├───────┼───────┼───────┼───────┼───────┼───────┤
-│ ALT/= │   ,   │   6   │   5   │   4   │   -   │                   │ PREV  │  END  │   ↓   │ PGDN  │ MUTE  │ RALT  │
-└───────┴───────┴───────┴───────┼───────┼───────┼───────┐   ┌───────┼───────┼───────┼───────┴───────┴───────┴───────┘
-                                │   ▲   │ LSHFT │  ADJ  │   │  ADJ  │ RSHFT │   ▲   │
-                                └───────┴───────┴───────┘   └───────┴───────┴───────┘  
-*/
-bindings = <
-
+raise_layer {
+	label= "raise";
+	bindings = <
 &kp BSPC             &kp KP_MULTIPLY   &kp KP_N9   &kp KP_N8   &kp KP_N7         &kp PLUS    &kp C_NEXT   &kp HOME         &kp PSCRN   &kp PG_UP   &kp C_VOL_UP   &kp RGUI
 &mt LCTRL KP_ENTER   &kp KP_SLASH      &kp KP_N3   &kp KP_N2   &kp KP_N1         &kp KP_N0   &kp C_PLAY   &kp LEFT         &kp UP      &kp RIGHT   &kp C_VOL_DN   &kp RCTRL 
 &mt LALT EQUAL       &numcomma 	       &kp KP_N6   &kp KP_N5   &kp KP_N4         &kp MINUS   &kp C_PREV   &kp END          &kp DOWN    &kp PG_DN   &kp C_MUTE     &kp RALT
-				                   &trans      &mt LSHFT SPACE   &lt 3 ESC   &lt 3 RET    &mt RSHFT BSPC   &trans
+				                   &lt 4 ESC      &mt LSHFT SPACE   &trans    	 &trans      &mt RSHFT BSPC  &lt 4 RET 
             >;
         };
 
 // ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 
 
-        adjust_layer {
-// ┌────────────────────────────────────────────┐
-label= "ADJUST"                                 ;
-// └────────────────────────────────────────────┘
-/*
-┌───────┬───────┬───────┬───────┬───────┬───────┐                   ┌───────┬───────┬───────┬───────┬───────┬───────┐
-│ BLDR  │       │       │       │       │BT NEXT│                   │BT NEXT│   ₽   │   €   │       │       │  BLDR │
-├───────┼───────┼───────┼───────┼───────┼───────┤                   ├───────┼───────┼───────┼───────┼───────┼───────┤                      
-│ BTCLR │  BT0  │  BT1  │  BT2  │  BT3  │  BT4  │                   │  BT4  │  BT3  │  BT2  │  BT1  │  BT0  │ BTCLR │
-├───────┼───────┼───────┼───────┼───────┼───────┤                   ├───────┼───────┼───────┼───────┼───────┼───────┤
-│ CAPS  │ NUMLK │  INS  │ SLCK  │ PAUSE │BT PREV│                   │BT PREV│ PAUSE │ SLCK  │  INS  │ NUMLK │ CAPS  │
-└───────┴───────┴───────┴───────┼───────┼───────┼───────┐   ┌───────┼───────┼───────┼───────┴───────┴───────┴───────┘
-                                │   ▲   │ RESET │   ▼   │   │   ▼   │ RESET │   ▲   │
-                                └───────┴───────┴───────┘   └───────┴───────┴───────┘
-*/
-bindings = <
-
+adjust_layer {
+	label = "ajust";
+	bindings = <
 &bootloader   &none          &none          &none          &bt BT_PRV        &bt BT_NXT     &bt BT_NXT    &kp RA(N8)        &euro          &cprght        &degree        &bootloader
 &bt BT_CLR    &bt BT_SEL 0   &bt BT_SEL 1   &bt BT_SEL 2   &bt BT_SEL 3      &bt BT_SEL 4   &bt BT_SEL 4  &bt BT_SEL 3      &bt BT_SEL 2   &bt BT_SEL 1   &bt BT_SEL 0   &bt BT_CLR
 &kp CAPS      &kp KP_NUM     &kp INS        &kp SLCK       &kp PAUSE_BREAK   &bt BT_PRV     &bt BT_PRV    &kp PAUSE_BREAK   &kp SLCK       &kp INS        &kp KP_NUM     &kp CAPS
